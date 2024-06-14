@@ -14,7 +14,7 @@ import {
   Flex,
 } from '@chakra-ui/react';
 import { useAuthState, useCreateUserWithEmailAndPassword, useSignInWithEmailAndPassword } from 'react-firebase-hooks/auth';
-import { auth } from '../firebaseConfig';
+import { auth } from '../../firebaseConfig';
 
 const AuthForm = () => {
   const [email, setEmail] = useState('');

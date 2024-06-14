@@ -1,6 +1,7 @@
-import React from 'react';
-import { Box, Text, List, ListItem, ListIcon, Divider } from '@chakra-ui/react';
+/* eslint-disable react/prop-types */
+import { Box, Text, List, ListItem, Divider } from '@chakra-ui/react';
 
+// eslint-disable-next-line react/prop-types
 const Pedido = ({ numero, items, total }) => {
   return (
     <Box bg="gray.700" borderWidth="3px" overflow="hidden" p={4}>

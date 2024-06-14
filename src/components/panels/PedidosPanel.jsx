@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { Flex, Grid, Box, useBreakpointValue } from '@chakra-ui/react';
-import FloatingAddButton from '../../components/FloatingAddButton';
-import Pedido from '../../components/Pedido';
+import FloatingAddButton from '../component/FloatingAddButton';
+import Pedido from '../component/Pedido';
 
-const Historial = () => {
+const Pedidos = () => {
   const [pedidos, setPedidos] = useState([
     {
       numero: 1,
@@ -93,4 +93,4 @@ const Historial = () => {
   );
 };
 
-export default Historial;
+export default Pedidos;

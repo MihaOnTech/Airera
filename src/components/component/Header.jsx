@@ -9,7 +9,7 @@ function Header() {
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   return (
-    <Flex as="header" h="50px" justifyContent="space-between" p="4" align="center" bg="blue.500" color="white">
+    <Flex as="header" h="30%" justifyContent="space-between" p="4" align="center" bg="blue.500" color="white">
       <Box as="img" src={Airera} h="30px" />
       <IconButton icon={<HamburgerIcon />} variant="outline" onClick={onOpen} aria-label="Open Menu" />
       <Drawer isOpen={isOpen} placement="right" onClose={onClose}>
