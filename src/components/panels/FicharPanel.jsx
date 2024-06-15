@@ -1,5 +1,5 @@
 import React from "react";
-import { Box, Button } from "@chakra-ui/react";
+import { Box, Button, Text, VStack } from "@chakra-ui/react";
 import { auth } from "../../firebaseConfig";
 
 const Fichar = () => {
@@ -15,9 +15,22 @@ const Fichar = () => {
 
   return (
     <Box>
-      <Button colorScheme="blue" onClick={handleLogout}>
+      <VStack>
+      <Button size="lg" colorScheme="blue" onClick={handleLogout}>
         Salir
       </Button>
+      <Button size="lg" colorScheme="blue">
+        Fichar
+      </Button>
+      </VStack>
+      
+
+      <Text>
+     { `- Fichar
+          . Iniciar proceso (Entrada/Salida)
+          . Seleccionar usuario
+          . Mandar fichaje al servidor`}
+      </Text>
     </Box>
   );
 };

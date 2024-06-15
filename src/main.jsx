@@ -1,23 +1,24 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import App from './App';
-import { extendTheme, ChakraProvider, ColorModeScript } from '@chakra-ui/react';
-import { BrowserRouter } from 'react-router-dom';
+import React from "react";
+import ReactDOM from "react-dom/client";
+import App from "./App";
+import { ChakraProvider, ColorModeScript } from "@chakra-ui/react";
+import { BrowserRouter } from "react-router-dom";
+import greenTheme from "./styles/greenTheme";
+import blueTheme from "./styles/blueTheme";
+import lightTheme from "./styles/lightTheme";
+import darkPastelTheme from "./styles/darkTheme";
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
+localStorage.removeItem("chakra-ui-color-mode");
 
-const theme = extendTheme({
-  config: {
-    initialColorMode: 'dark',
-    useSystemColorMode: false,
-  },
-});
+const root = ReactDOM.createRoot(document.getElementById("root"));
+
 root.render(
   <React.StrictMode>
     <BrowserRouter>
-      <ChakraProvider theme={theme}>
-      <ColorModeScript initialColorMode={theme.config.initialColorMode} />
-      {localStorage.setItem('chakra-ui-color-mode', 'dark')}
+      <ChakraProvider theme={darkPastelTheme}>
+        <ColorModeScript
+          initialColorMode={darkPastelTheme.config.initialColorMode}
+        />
         <App />
       </ChakraProvider>
     </BrowserRouter>

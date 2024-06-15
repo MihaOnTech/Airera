@@ -10,7 +10,7 @@ const CustomTab = ({ children }) => {
         borderBottom: "0",
         borderLeft: "3px solid",
         borderRight: "3px solid",
-        bg: "blue.800",
+        bg: "brand.200",
       }}
     >
       {children}

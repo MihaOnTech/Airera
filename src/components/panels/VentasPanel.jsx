@@ -16,11 +16,23 @@ const Ventas = () => {
     setCart([...cart, product]);
   };
 
+  const removeItemFromCart = (index) => {
+    setCart((prevCart) => prevCart.filter((_, i) => i !== index));
+  };
+
   const handleAddSale = () => {
-    const newSale = { items: cart, date: new Date().toISOString() };
+    const items = cart.map((product) => product.Nombre); // Extraer los nombres de los productos
+    const importe = cart.reduce(
+      (total, product) => total + parseFloat(product.Precio),
+      0
+    ); // Sumar los precios
+    const newSale = {
+      items,
+      importe,
+    };
     addSale(newSale);
     console.log("New Sale!");
-    setCart([]); 
+    setCart([]);
   };
 
   // Filtrar productos por categoría
@@ -28,11 +40,9 @@ const Ventas = () => {
     (product) => product.Categoria === selectedCategory
   );
 
-  console.log("filteredProducts: " + filteredProducts)
-
   return (
     <Grid
-      minHeight="86vh"
+      height="86vh"
       templateAreas={`"main nav"
                     "footer nav"`}
       gridTemplateRows={"1fr 20vh"}
@@ -41,29 +51,24 @@ const Ventas = () => {
       color="blackAlpha.700"
       fontWeight="bold"
     >
-      <GridItem
-        pl="2"
-        area={"nav"}
-        color="white"
-      >
-                <Carrito cart={cart} handleAddSale={handleAddSale} />
-
+      <GridItem pl="2" area={"nav"} color="white">
+        <Carrito 
+          cart={cart} 
+          handleAddSale={handleAddSale}
+          removeItemFromCart={removeItemFromCart}
+           />
       </GridItem>
-      <GridItem
-        pl="2"
-        area={"main"}
-        color="white"
-      >
-                <ListaProductos products={filteredProducts} handleAddToCart={handleAddToCart} />
-
+      <GridItem pl="2" area={"main"} color="white">
+        <ListaProductos
+          products={filteredProducts}
+          handleAddToCart={handleAddToCart}
+        />
       </GridItem>
-      <GridItem
-        pl="2"
-        area={"footer"}
-        color="white"
-      >
-                <Categorias products={products} setSelectedCategory={setSelectedCategory} />
-
+      <GridItem pl="2" area={"footer"} color="white">
+        <Categorias
+          products={products}
+          setSelectedCategory={setSelectedCategory}
+        />
       </GridItem>
     </Grid>
   );

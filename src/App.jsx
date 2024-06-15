@@ -9,7 +9,6 @@ import { Flex, Box } from '@chakra-ui/react';
 
 function App() {
   const [user, loading, error] = useAuthState(auth);
-
   if (loading) return <div>Loading...</div>;
   if (error) return <div>Error: {error.message}</div>;
 

@@ -8,7 +8,6 @@ const BASE_URL = import.meta.env.VITE_BASE_URL;
 export const getSalesFromFirestore = async () => {
     try {
         const response = await axios.get(`${BASE_URL}/getDailySales`);
-        console.log(response.data);
         return response.data; 
     } catch (error) {
         console.error('Error fetching sales:', error);
@@ -20,7 +19,7 @@ export const getSalesFromFirestore = async () => {
 export const addSaleToFirestore = async (sale) => {
     try {
         const response = await axios.post(`${BASE_URL}/addSale`, sale );
-        return response.data.id; 
+        return response.data; 
     } catch (error) {
         console.error('Error adding sale:', error);
         throw error;
@@ -31,7 +30,6 @@ export const addSaleToFirestore = async (sale) => {
 export const getAllProducts = async () => {
     try {
         const response = await axios.get(`${BASE_URL}/getAllProducts`);
-        console.log(response.data);
         return response.data;
     } catch (error) {
         console.error('Error getting products', error);

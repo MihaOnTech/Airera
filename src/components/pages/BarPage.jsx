@@ -40,6 +40,8 @@ const BarPage = () => {
               path
             )}
             onChange={handleTabsChange}
+            bg="brand.300"
+            color="brand.400"
           >
             <TabList height="10vh">
               <CustomTab>Ventas</CustomTab>
@@ -49,8 +51,8 @@ const BarPage = () => {
               <CustomTab>Fichar</CustomTab>
             </TabList>
             <TabPanels
-              borderColor="white"
-              bg="blue.800"
+              borderColor="black"
+              bg="brand.200"
               borderWidth="3px"
               height="90vh"
               borderTop="0px"

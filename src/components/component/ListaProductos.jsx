@@ -12,9 +12,11 @@ const ListaProductos = ({ products, handleAddToCart }) => {
             w="100%"  // Se adapta al ancho de la celda de la cuadrícula
             h="100px" // Altura fija para todos los botones
             p={4}
-            bg="blue.500"
-            color="white"
-            _hover={{ bg: "blue.700" }}
+            bg="brand.100"
+            color="black"
+            fontSize="23px"
+            _hover={{ bg: "brand.50" }}
+            overflow="clip"
           >
             {product.Nombre}
           </Button>

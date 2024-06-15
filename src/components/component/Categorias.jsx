@@ -23,9 +23,10 @@ const Categorias = ({ products, setSelectedCategory }) => {
             onClick={() => setSelectedCategory(category)}
             w="100%"
             h="100%"
-            bg="blue.500"
-            color="white"
-            _hover={{ bg: "blue.700" }}
+            bg="brand.100"
+            color="black"
+            _hover={{ bg: "brand.50" }}
+            fontSize="30px"
           >
             {category}
           </Button>
