@@ -27,7 +27,7 @@ const AuthForm = () => {
   const toast = useToast();
 
   const handleAuth = async () => {
-    if (isLogin) {
+    if (isLogin) {0
       signInWithEmailAndPassword(email, password);
     } else {
       createUserWithEmailAndPassword(email, password);

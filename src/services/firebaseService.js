@@ -18,6 +18,7 @@ export const getSalesFromFirestore = async () => {
 // Función para añadir una nueva venta a través de la API
 export const addSaleToFirestore = async (sale) => {
     try {
+        console.log(sale);
         const response = await axios.post(`${BASE_URL}/addSale`, sale );
         return response.data; 
     } catch (error) {

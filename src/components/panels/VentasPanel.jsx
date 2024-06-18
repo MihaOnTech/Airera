@@ -13,25 +13,52 @@ const Ventas = () => {
   const [cart, setCart] = useState([]);
 
   const handleAddToCart = (product) => {
-    setCart([...cart, product]);
+    const productIndex = cart.findIndex((item) => item[0] === product.Nombre);
+    if (productIndex !== -1) {
+      // Producto existente, incrementar cantidad
+      const newCart = [...cart];
+      newCart[productIndex] = [
+        newCart[productIndex][0],
+        newCart[productIndex][1],
+        newCart[productIndex][2] + 1,
+      ];
+      setCart(newCart);
+    } else {
+      // Producto nuevo, agregar al carrito
+      setCart([...cart, [product.Nombre, product.Precio, 1]]);
+    }
   };
 
   const removeItemFromCart = (index) => {
-    setCart((prevCart) => prevCart.filter((_, i) => i !== index));
+    setCart((prevCart) => {
+      const newCart = [...prevCart];
+      if (newCart[index][2] > 1) {
+        newCart[index] = [
+          newCart[index][0],
+          newCart[index][1],
+          newCart[index][2] - 1,
+        ];
+      } else {
+        newCart.splice(index, 1);
+      }
+      return newCart;
+    });
   };
 
   const handleAddSale = () => {
-    const items = cart.map((product) => product.Nombre); // Extraer los nombres de los productos
-    const importe = cart.reduce(
-      (total, product) => total + parseFloat(product.Precio),
-      0
-    ); // Sumar los precios
+    const items = cart.map(([nombre, _, cantidad]) => ({
+      nombre: nombre,
+      cantidad: cantidad,
+    }));
+    const importe = cart.reduce((total, [_, precio, cantidad]) => {
+      return total + precio * cantidad;
+    }, 0); // Iniciar la suma en 0
+
     const newSale = {
       items,
       importe,
     };
     addSale(newSale);
-    console.log("New Sale!");
     setCart([]);
   };
 
@@ -52,11 +79,11 @@ const Ventas = () => {
       fontWeight="bold"
     >
       <GridItem pl="2" area={"nav"} color="white">
-        <Carrito 
-          cart={cart} 
+        <Carrito
+          cart={cart}
           handleAddSale={handleAddSale}
           removeItemFromCart={removeItemFromCart}
-           />
+        />
       </GridItem>
       <GridItem pl="2" area={"main"} color="white">
         <ListaProductos

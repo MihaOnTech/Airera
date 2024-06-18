@@ -13,10 +13,12 @@ const ListaProductos = ({ products, handleAddToCart }) => {
             h="100px" // Altura fija para todos los botones
             p={4}
             bg="brand.100"
-            color="black"
             fontSize="23px"
             _hover={{ bg: "brand.50" }}
             overflow="clip"
+            borderWidth={'2px'}
+            borderColor={'black'}
+            fontWeight={'normal'}
           >
             {product.Nombre}
           </Button>

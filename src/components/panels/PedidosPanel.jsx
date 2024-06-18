@@ -80,15 +80,11 @@ const Pedidos = () => {
   return (
     <Box
         padding={2}
-        bg="gray.800"
+        borderWidth={'3px'}
+        borderColor={'brand.400'}
+        height={'100%'}
       >
-        {pedidos.map((pedido) => (
-          <Box key={pedido.numero} margin={2}>
-             <Pedido  numero={pedido.numero} items={pedido.items} total={pedido.total} />
-          </Box>
-         
-        ))}
-      <FloatingAddButton onClick={handleAddPedido} />
+       
     </Box>
   );
 };

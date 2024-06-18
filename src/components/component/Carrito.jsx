@@ -4,38 +4,45 @@ import { CloseIcon } from "@chakra-ui/icons"; // Icono de la X
 
 const Carrito = ({ cart, handleAddSale, removeItemFromCart }) => {
   // Calcular el total del importe
-  const total = cart.reduce((sum, item) => sum + item.Precio, 0).toFixed(2);
+  const total = cart.reduce((sum, [nombre, precio, cantidad]) => sum + (precio * cantidad), 0).toFixed(2);
 
   return (
-    <Box height="100%" display="flex" flexDirection="column" borderRadius="md">
+    <Box
+      height="100%"
+      display="flex"
+      flexDirection="column"
+      borderRadius="md"
+      borderWidth={"5px"}
+      borderColor={"black"}
+      bg={'brand.100'}
+    >
       {/* Lista de productos en la cesta */}
       <Box
         height={"70%"}
         overflowY="auto"
         fontSize={"25px"}
-        color={"brand.400"}
-        bg={"bra"}
-        borderWidth={"5px"}
-        borderColor={"brand.400"}
         p={4}
+        fontWeight={"normal"}
+        color={'black'}
       >
-        {cart.map((item, index) => (
+        {cart.map(([nombre, precio, cantidad], index) => (
           <Flex
             key={index}
             borderRadius="md"
             align="center"
             justifyContent="space-between"
-            mb={2}
+            m={2}
           >
-            <Text>{item.Nombre}</Text>
+            <Text>{`${cantidad} x ${nombre} `}</Text>
             <Flex align="center">
-              <Text mr={"10px"}>{item.Precio.toFixed(2)} €</Text>
+              <Text mr={"10px"}>{`${(precio * cantidad).toFixed(2)} €`}</Text>
               <IconButton
                 aria-label="Eliminar elemento"
                 icon={<CloseIcon />}
-                colorScheme="red"
-                size="sm"
-                onClick={() => removeItemFromCart(index)} // Llama a la función para eliminar el elemento
+                bg={'brand.50'}
+                textColor={'black'}
+                size="xs"
+                onClick={() => removeItemFromCart(index)}
               />
             </Flex>
           </Flex>
@@ -44,15 +51,15 @@ const Carrito = ({ cart, handleAddSale, removeItemFromCart }) => {
 
       {/* Total del importe */}
       <Flex
-        bg="brand.200"
         borderRadius="md"
-        color={"brand.400"}
         justifyContent="space-between"
-        fontSize="30px"
+        fontSize="35px"
+        fontWeight={"normal"}
         height="7%"
         alignItems="center"
+        color={'black'}
         p={2}
-        mt={2}
+        m={2}
       >
         <Text>TOTAL:</Text>
         <Text>{total} €</Text>
@@ -61,11 +68,14 @@ const Carrito = ({ cart, handleAddSale, removeItemFromCart }) => {
       {/* Botón para completar la venta */}
       <Button
         onClick={handleAddSale}
-        colorScheme="green"
-        fontSize="30px"
+        fontSize="40px"
         borderRadius="md"
         height="23%"
-        mt={2}
+        m={3}
+        bg={'brand.50'}
+        borderWidth={"2px"}
+        borderColor={"black"}
+        fontWeight={"medium"}
       >
         Confirmar
       </Button>

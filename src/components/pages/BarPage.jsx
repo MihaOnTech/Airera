@@ -22,7 +22,7 @@ const BarPage = () => {
   const path = location.pathname.split("/")[2] || "Ventas"; // Default to "Pedidos"
 
   const handleTabsChange = (index) => {
-    const paths = ["Ventas", "Pedidos", "Historial", "Caja", "Fichar"];
+    const paths = ["Ventas", "Historial", "Pedidos", "Caja", "Fichar"];
     navigate(paths[index]);
   };
 
@@ -36,17 +36,17 @@ const BarPage = () => {
             zIndex="docked"
             isFitted
             variant="enclosed"
-            index={["Ventas", "Pedidos", "Historial", "Caja", "Fichar"].indexOf(
+            index={["Ventas", "Historial", "Pedidos", "Caja", "Fichar"].indexOf(
               path
             )}
             onChange={handleTabsChange}
             bg="brand.300"
-            color="brand.400"
+            
           >
-            <TabList height="10vh">
+            <TabList height="10vh" >
               <CustomTab>Ventas</CustomTab>
-              <CustomTab>Pedidos</CustomTab>
               <CustomTab>Historial</CustomTab>
+              <CustomTab>Tareas</CustomTab>
               <CustomTab>Caja</CustomTab>
               <CustomTab>Fichar</CustomTab>
             </TabList>
@@ -61,10 +61,10 @@ const BarPage = () => {
                 <Ventas />
               </TabPanel>
               <TabPanel>
-                <Pedidos />
+                <Historial />
               </TabPanel>
               <TabPanel>
-                <Historial />
+                <Pedidos />
               </TabPanel>
               <TabPanel>
                 <Caja />
