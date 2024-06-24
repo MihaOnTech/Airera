@@ -31,7 +31,6 @@ const BarPage = () => {
       <ProductsProvider>
         <SalesProvider>
           <Tabs
-            position="fixed"
             width="100%"
             zIndex="docked"
             isFitted
