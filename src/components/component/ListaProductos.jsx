@@ -13,12 +13,17 @@ const ListaProductos = ({ products, handleAddToCart }) => {
             h="100px" // Altura fija para todos los botones
             p={4}
             bg="brand.100"
-            fontSize="23px"
+            fontSize="15px"
             _hover={{ bg: "brand.50" }}
-            overflow="clip"
+            overflow="hidden"  // Asegura que el contenido no se desborde del botón
+            whiteSpace="normal"  // Permite que el texto ocupe más de una línea
+            textAlign="center"  // Centra el texto horizontalmente
+            verticalAlign="middle"  // Centra el texto verticalmente
             borderWidth={'2px'}
             borderColor={'black'}
             fontWeight={'normal'}
+            lineHeight="1.2"  // Ajusta la altura de línea para mejorar la legibilidad
+
           >
             {product.Nombre}
           </Button>
