@@ -13,7 +13,7 @@ const ListaProductos = ({ products, handleAddToCart }) => {
             h="100px" // Altura fija para todos los botones
             p={4}
             bg="brand.100"
-            fontSize="15px"
+            fontSize="18px"
             _hover={{ bg: "brand.50" }}
             overflow="hidden"  // Asegura que el contenido no se desborde del botón
             whiteSpace="normal"  // Permite que el texto ocupe más de una línea
