@@ -38,3 +38,14 @@ export const getAllProducts = async () => {
     }
 };
 
+// Función para obtener todos los productos a través de la API
+export const getTopSellingProducts = async () => {
+    try {
+        const response = await axios.get(`${BASE_URL}/getTopSellingProducts`);
+        return response.data;
+    } catch (error) {
+        console.error('Error getting products', error);
+        throw error;
+    }
+};
+

@@ -13,7 +13,7 @@ import Historial from "../panels/HistorialPanel";
 import Caja from "../panels/CajaPanel";
 import Fichar from "../panels/FicharPanel";
 import Ventas from "../panels/VentasPanel";
-import Pedidos from "../panels/PedidosPanel";
+import Tareas from "../panels/TareasPanel";
 import CustomTab from "../component/CustomTab";
 
 const BarPage = () => {
@@ -53,7 +53,7 @@ const BarPage = () => {
               borderColor="black"
               bg="brand.200"
               borderWidth="3px"
-              height="90vh"
+              height="100%"
               borderTop="0px"
             >
               <TabPanel>
@@ -63,7 +63,7 @@ const BarPage = () => {
                 <Historial />
               </TabPanel>
               <TabPanel>
-                <Pedidos />
+                <Tareas />
               </TabPanel>
               <TabPanel>
                 <Caja />

@@ -1,10 +1,10 @@
 import React from "react";
-import { Box, SimpleGrid, Button } from "@chakra-ui/react";
+import { Box, Grid, SimpleGrid, Button } from "@chakra-ui/react";
 
-const ListaProductos = ({ products, handleAddToCart }) => {
+const ProductosFavoritos = ({ products, handleAddToCart }) => {
   return (
     <Box w="100%" h="100%" overflow="auto">
-      <SimpleGrid columns={{ base: 2, md: 4, lg: 6 }} spacing={4}>
+      <Grid templateRows={`repeat(${numColumns}, 1fr)`} gap={2} w="100%" h="100%">
         {products.map((product) => (
           <Button
             key={product.id}
@@ -23,9 +23,9 @@ const ListaProductos = ({ products, handleAddToCart }) => {
             {product.Nombre}
           </Button>
         ))}
-      </SimpleGrid>
+      </Grid>
     </Box>
   );
 };
 
-export default ListaProductos;
+export default ProductosFavoritos;
