@@ -42,7 +42,7 @@ const Historial = () => {
                   >
                     <Text>
                       V000001 - {parseTime(sale.date)} - {sale.items.length}{" "}
-                      items - Importe: {sale.importe.toFixed(2)}€
+                      items - Importe: {sale.importe}€
                     </Text>
                   </Box>
                   <AccordionIcon />

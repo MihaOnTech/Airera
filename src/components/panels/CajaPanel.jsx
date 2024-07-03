@@ -8,6 +8,7 @@ const Caja = () => {
 
   // Cálculo del total de ventas y beneficio
   const totalSales = useMemo(() => {
+    if (!sales) return 0;
     return sales.reduce((acc, sale) => acc + sale.importe, 0);
   }, [sales]);
 
@@ -33,15 +34,9 @@ const Caja = () => {
       </GridItem>
       <GridItem area={"left"} bg={"brand.300"}>
         <Box overflowY="auto" p={4}>
-          {sales.map((sale, index) => (
-            <Box key={index} mb={2}>
-              {sale.items.map((item, idx) => (
-                <Text key={idx}>{`${item.cantidad} x ${item.nombre} = ${item.cantidad * sale.items.find(i => i.nombre === item.nombre).precio}`}</Text>
-              ))}
-            </Box>
-          ))}
+          {"VENTAS"}
           <Text mt={4} fontSize="xl" fontWeight="bold">
-            Total: {totalSales}€
+            Total: {totalSales.toFixed(2)}€
           </Text>
         </Box>
       </GridItem>
