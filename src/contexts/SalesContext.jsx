@@ -2,6 +2,7 @@ import React, { createContext, useState, useEffect } from "react";
 import {
   getSalesFromFirestore,
   addSaleToFirestore,
+  completeSale
 } from "../services/firebaseService";
 import { v4 as uuidv4 } from "uuid";
 
@@ -48,61 +49,39 @@ export const SalesProvider = ({ children }) => {
 
   const addSale = async (newSale) => {
     const tempTimestamp = new Date().toISOString();
-    const saleId = uuidv4();
-    const saleWithId = { ...newSale, UUID: saleId, date: tempTimestamp };
+    const saleWithId = { ...newSale, UUID: uuidv4(), date: tempTimestamp };
 
-    const today = new Date().toLocaleDateString();
-
-    const existingSaleIndex = sales.findIndex(
-      (sale) =>
-        sale.cliente === newSale.cliente && new Date(sale.date).toLocaleDateString() === today
-    );
-
-    if (existingSaleIndex !== -1) {
-      const updatedSales = [...sales];
-      const existingSale = updatedSales[existingSaleIndex];
-      existingSale.items = [
-        ...existingSale.items,
-        ...newSale.items,
-      ];
-      existingSale.importe += newSale.importe;
-
-      if (navigator.onLine) {
-        try {
-          await addSaleToFirestore(existingSale);
-        } catch (error) {
-          console.error("Error updating sale:", error);
-        }
-      } else {
-        localStorage.setItem(
-          "offlineSales",
-          JSON.stringify([...updatedSales])
-        );
+    if (navigator.onLine) {
+      try {
+        const saleFromServer = await addSaleToFirestore(saleWithId);
+        setSales((prevSales) => [...prevSales, saleFromServer]);
+      } catch (error) {
+        console.error("Error adding sale:", error);
       }
-
-      setSales(updatedSales);
     } else {
-      if (navigator.onLine) {
-        try {
-          const saleFromServer = await addSaleToFirestore(saleWithId);
-          setSales((prevSales) => [...prevSales, saleFromServer]);
-        } catch (error) {
-          console.error("Error adding sale:", error);
-        }
-      } else {
-        const offlineSales =
-          JSON.parse(localStorage.getItem("offlineSales")) || [];
-        localStorage.setItem(
-          "offlineSales",
-          JSON.stringify([...offlineSales, saleWithId])
-        );
-        setSales((prevSales) => [...prevSales, saleWithId]);
-      }
+      const offlineSales =
+        JSON.parse(localStorage.getItem("offlineSales")) || [];
+      localStorage.setItem(
+        "offlineSales",
+        JSON.stringify([...offlineSales, saleWithId])
+      );
+      setSales((prevSales) => [...prevSales, saleWithId]);
+    }
+  };
+
+  const markAsCompleted = async (saleId) => {
+    try {
+      const updatedSale = await completeSale(saleId);
+      setSales((prevSales) =>
+        prevSales.map((sale) => (sale.UUID === saleId ? updatedSale : sale))
+      );
+    } catch (error) {
+      console.error('Error marking sale as complete:', error);
     }
   };
 
   return (
-    <SalesContext.Provider value={{ sales, addSale }}>
+    <SalesContext.Provider value={{ sales, addSale, markAsCompleted }}>
       {children}
     </SalesContext.Provider>
   );

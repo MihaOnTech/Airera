@@ -61,6 +61,7 @@ const Ventas = () => {
       items,
       importe,
       cliente: selectedClient || newClientName,
+      status: "Pendiente",
       fecha: new Date().toISOString(),
     };
 
@@ -68,7 +69,7 @@ const Ventas = () => {
     setCart([]);
     if (newClientName) {
       addClient({ nombre: newClientName });
-      setSelectedClient(newClientName);
+      setSelectedClient("");
       setNewClientName("");
     }
   };

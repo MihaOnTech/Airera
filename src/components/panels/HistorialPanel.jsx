@@ -12,13 +12,15 @@ import {
   Button,
 } from "@chakra-ui/react";
 import { SalesContext } from "../../contexts/SalesContext";
-import { parseTime } from "../../utils/timeParser";
+import { completeSale } from "../../services/firebaseService";
+
+
 
 const Historial = () => {
   const { sales, deleteSale } = useContext(SalesContext);
 
-  const handleDeleteSale = (id) => {
-    deleteSale(id);
+  const handleCompleteSale = (id) => {
+    completeSale(id);
   };
 
   return (
@@ -31,8 +33,8 @@ const Historial = () => {
           }
 
           return (
-            <Accordion key={sale.UUID} allowToggle bg="brand.100">
-              <AccordionItem borderWidth={"2px"} borderColor={"black"}>
+            <Accordion key={sale.UUID} allowToggle>
+              <AccordionItem borderWidth={"2px"} borderColor={"black"} borderRadius={"5px"}  bg="brand.100">
                 <AccordionButton>
                   <Box
                     flex="1"
@@ -41,8 +43,7 @@ const Historial = () => {
                     fontWeight={"normal"}
                   >
                     <Text>
-                     {sale.cliente} - {parseTime(sale.date)} - {sale.items.length}{" "}
-                      items - Importe: {sale.importe}€
+                     {sale.cliente} - Importe: {sale.importe}€ - {sale.status}
                     </Text>
                   </Box>
                   <AccordionIcon />
@@ -59,11 +60,11 @@ const Historial = () => {
                     )}
                   <Button
                     mt={4}
-                    colorScheme="red"
                     size="md"
-                    onClick={() => handleDeleteSale(sale.UUID)}
+                    onClick={() => handleCompleteSale(sale.UUID)}
+                    bg={"brand.50"}
                   >
-                    Eliminar Venta
+                    Cobrar
                   </Button>
                 </AccordionPanel>
               </AccordionItem>

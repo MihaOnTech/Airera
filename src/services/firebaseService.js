@@ -26,6 +26,28 @@ export const addSaleToFirestore = async (sale) => {
         throw error;
     }
 };
+// Función para añadir una nueva venta a través de la API
+export const completeSale = async (saleId) => {
+    try {
+        const saleUpdates = { status: "Pagado" };
+        const response = await axios.patch(`${BASE_URL}/updateSale?id=${saleId}`, saleUpdates);
+        return response.data; 
+    } catch (error) {
+        console.error('Error updating sale:', error);
+        throw error;
+    }
+};
+
+// Función para obtener todos los clientes a través de la API
+export const getAllClients = async () => {
+    try {
+        const response = await axios.get(`${BASE_URL}/getAllClients`);
+        return response.data;
+    } catch (error) {
+        console.error('Error getting products', error);
+        throw error;
+    }
+};
 
 // Función para obtener todos los productos a través de la API
 export const getAllProducts = async () => {
