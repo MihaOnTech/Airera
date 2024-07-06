@@ -1,9 +1,8 @@
 import React from "react";
-import { Box, Button, Text, Flex, IconButton } from "@chakra-ui/react";
-import { CloseIcon } from "@chakra-ui/icons"; // Icono de la X
+import { Box, Button, Text, Flex, IconButton, Select, Input } from "@chakra-ui/react";
+import { CloseIcon } from "@chakra-ui/icons";
 
-const Carrito = ({ cart, handleAddSale, removeItemFromCart }) => {
-  // Calcular el total del importe
+const Carrito = ({ cart, handleAddSale, removeItemFromCart, clients, selectedClient, setSelectedClient, newClientName, setNewClientName }) => {
   const total = cart.reduce((sum, [nombre, precio, cantidad]) => sum + (precio * cantidad), 0).toFixed(2);
 
   return (
@@ -16,9 +15,8 @@ const Carrito = ({ cart, handleAddSale, removeItemFromCart }) => {
       borderColor={"black"}
       bg={'brand.100'}
     >
-      {/* Lista de productos en la cesta */}
       <Box
-        height={"70%"}
+        flex="1"
         overflowY="auto"
         fontSize={"25px"}
         p={4}
@@ -49,36 +47,47 @@ const Carrito = ({ cart, handleAddSale, removeItemFromCart }) => {
         ))}
       </Box>
 
-      {/* Total del importe */}
-      <Flex
-        borderRadius="md"
-        justifyContent="space-between"
-        fontSize="35px"
-        fontWeight={"normal"}
-        height="7%"
-        alignItems="center"
-        color={'black'}
-        p={2}
-        m={2}
-      >
-        <Text>TOTAL:</Text>
-        <Text>{total} €</Text>
-      </Flex>
+      <Box p={4} bg="brand.100" borderTopWidth="1px" borderColor="black" color={"black"}>
+        <Flex direction="column" width="100%" mb={4}>
+          <Select
+            placeholder="Nuevo Cliente"
+            onChange={(e) => setSelectedClient(e.target.value)}
+            value={selectedClient}
+            mb="2"
+          >
+            {clients.map((client, index) => (
+              <option key={index} value={client.nombre}>
+                {client.nombre}
+              </option>
+            ))}
+          </Select>
+          <Input
+            placeholder="Nuevo Cliente"
+            value={newClientName}
+            onChange={(e) => setNewClientName(e.target.value)}
+            mb="2"
+          />
+        </Flex>
 
-      {/* Botón para completar la venta */}
-      <Button
-        onClick={handleAddSale}
-        fontSize="40px"
-        borderRadius="md"
-        height="23%"
-        m={3}
-        bg={'brand.50'}
-        borderWidth={"2px"}
-        borderColor={"black"}
-        fontWeight={"medium"}
-      >
-        Confirmar
-      </Button>
+        <Flex justifyContent="space-between" alignItems="center" mb={4}>
+          <Text fontSize="20px" fontWeight="bold">TOTAL:</Text>
+          <Text fontSize="20px" fontWeight="bold">{total} €</Text>
+        </Flex>
+
+        <Button
+          onClick={handleAddSale}
+          fontSize="20px"
+          borderRadius="md"
+          height="40px"
+          bg={'brand.50'}
+          borderWidth={"2px"}
+          borderColor={"black"}
+          fontWeight={"medium"}
+          width="100%"
+        >
+          Confirmar
+        </Button>
+      </Box>
     </Box>
   );
 };

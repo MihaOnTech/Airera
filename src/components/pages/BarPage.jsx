@@ -9,6 +9,7 @@ import {
 } from "@chakra-ui/react";
 import { ProductsProvider } from "../../contexts/ProductsContext";
 import { SalesProvider } from "../../contexts/SalesContext";
+import { ClientsProvider } from "../../contexts/ClientsContext";
 import Historial from "../panels/HistorialPanel";
 import Caja from "../panels/CajaPanel";
 import Fichar from "../panels/FicharPanel";
@@ -30,49 +31,54 @@ const BarPage = () => {
     <Box>
       <ProductsProvider>
         <SalesProvider>
-          <Tabs
-            width="100%"
-            zIndex="docked"
-            isFitted
-            variant="enclosed"
-            index={["Ventas", "Historial", "Pedidos", "Caja", "Fichar"].indexOf(
-              path
-            )}
-            onChange={handleTabsChange}
-            bg="brand.300"
-            
-          >
-            <TabList height="10vh" >
-              <CustomTab>Ventas</CustomTab>
-              <CustomTab>Historial</CustomTab>
-              <CustomTab>Tareas</CustomTab>
-              <CustomTab>Caja</CustomTab>
-              <CustomTab>Fichar</CustomTab>
-            </TabList>
-            <TabPanels
-              borderColor="black"
-              bg="brand.200"
-              borderWidth="3px"
-              height="100%"
-              borderTop="0px"
+          <ClientsProvider>
+            <Tabs
+              width="100%"
+              zIndex="docked"
+              isFitted
+              variant="enclosed"
+              index={[
+                "Ventas",
+                "Historial",
+                "Pedidos",
+                "Caja",
+                "Fichar",
+              ].indexOf(path)}
+              onChange={handleTabsChange}
+              bg="brand.300"
             >
-              <TabPanel>
-                <Ventas />
-              </TabPanel>
-              <TabPanel>
-                <Historial />
-              </TabPanel>
-              <TabPanel>
-                <Tareas />
-              </TabPanel>
-              <TabPanel>
-                <Caja />
-              </TabPanel>
-              <TabPanel>
-                <Fichar />
-              </TabPanel>
-            </TabPanels>
-          </Tabs>
+              <TabList height="10vh">
+                <CustomTab>Ventas</CustomTab>
+                <CustomTab>Historial</CustomTab>
+                <CustomTab>Tareas</CustomTab>
+                <CustomTab>Caja</CustomTab>
+                <CustomTab>Fichar</CustomTab>
+              </TabList>
+              <TabPanels
+                borderColor="black"
+                bg="brand.200"
+                borderWidth="3px"
+                height="100%"
+                borderTop="0px"
+              >
+                <TabPanel>
+                  <Ventas />
+                </TabPanel>
+                <TabPanel>
+                  <Historial />
+                </TabPanel>
+                <TabPanel>
+                  <Tareas />
+                </TabPanel>
+                <TabPanel>
+                  <Caja />
+                </TabPanel>
+                <TabPanel>
+                  <Fichar />
+                </TabPanel>
+              </TabPanels>
+            </Tabs>
+          </ClientsProvider>
         </SalesProvider>
       </ProductsProvider>
     </Box>

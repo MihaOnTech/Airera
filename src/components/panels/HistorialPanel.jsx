@@ -41,7 +41,7 @@ const Historial = () => {
                     fontWeight={"normal"}
                   >
                     <Text>
-                      V000001 - {parseTime(sale.date)} - {sale.items.length}{" "}
+                     {sale.cliente} - {parseTime(sale.date)} - {sale.items.length}{" "}
                       items - Importe: {sale.importe}€
                     </Text>
                   </Box>

@@ -1,7 +1,8 @@
 import React, { useState, useContext } from "react";
-import { Flex, Grid, GridItem } from "@chakra-ui/react";
+import { Flex, Grid, GridItem, Select, Button, Input } from "@chakra-ui/react";
 import { ProductsContext } from "../../contexts/ProductsContext";
 import { SalesContext } from "../../contexts/SalesContext";
+import { ClientsContext } from "../../contexts/ClientsContext";
 import Carrito from "../component/Carrito";
 import ListaProductos from "../component/ListaProductos";
 import Categorias from "../component/Categorias";
@@ -9,13 +10,16 @@ import Categorias from "../component/Categorias";
 const Ventas = () => {
   const products = useContext(ProductsContext);
   const { addSale } = useContext(SalesContext);
+  const { clients, addClient } = useContext(ClientsContext);
+
   const [selectedCategory, setSelectedCategory] = useState("Bebidas");
   const [cart, setCart] = useState([]);
+  const [selectedClient, setSelectedClient] = useState("");
+  const [newClientName, setNewClientName] = useState("");
 
   const handleAddToCart = (product) => {
     const productIndex = cart.findIndex((item) => item[0] === product.Nombre);
     if (productIndex !== -1) {
-      // Producto existente, incrementar cantidad
       const newCart = [...cart];
       newCart[productIndex] = [
         newCart[productIndex][0],
@@ -24,7 +28,6 @@ const Ventas = () => {
       ];
       setCart(newCart);
     } else {
-      // Producto nuevo, agregar al carrito
       setCart([...cart, [product.Nombre, product.Precio, 1]]);
     }
   };
@@ -52,17 +55,24 @@ const Ventas = () => {
     }));
     const importe = cart.reduce((total, [_, precio, cantidad]) => {
       return total + precio * cantidad;
-    }, 0); // Iniciar la suma en 0
+    }, 0);
 
     const newSale = {
       items,
       importe,
+      cliente: selectedClient || newClientName,
+      fecha: new Date().toISOString(),
     };
+
     addSale(newSale);
     setCart([]);
+    if (newClientName) {
+      addClient({ nombre: newClientName });
+      setSelectedClient(newClientName);
+      setNewClientName("");
+    }
   };
 
-  // Filtrar productos por categoría
   const filteredProducts = products.filter(
     (product) => product.Categoria === selectedCategory
   );
@@ -83,6 +93,11 @@ const Ventas = () => {
           cart={cart}
           handleAddSale={handleAddSale}
           removeItemFromCart={removeItemFromCart}
+          clients={clients}
+          selectedClient={selectedClient}
+          setSelectedClient={setSelectedClient}
+          newClientName={newClientName}
+          setNewClientName={setNewClientName}
         />
       </GridItem>
       <GridItem pl="2" area={"main"} color="white">
