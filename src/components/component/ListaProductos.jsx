@@ -4,16 +4,16 @@ import { Box, SimpleGrid, Button } from "@chakra-ui/react";
 const ListaProductos = ({ products, handleAddToCart }) => {
   return (
     <Box w="100%" h="100%" overflow="auto">
-      <SimpleGrid columns={{ base: 2, md: 4, lg: 6 }} spacing={4}>
+      <SimpleGrid columns={{ base: 2, md: 4, lg: 7 }} spacing={3}>
         {products.map((product) => (
           <Button
             key={product.id}
             onClick={() => handleAddToCart(product)}
-            w="100%"  // Se adapta al ancho de la celda de la cuadrícula
-            h="100px" // Altura fija para todos los botones
-            p={4}
+            w="75px"  // Se adapta al ancho de la celda de la cuadrícula
+            h="75px" // Altura fija para todos los botones
+            p={2}
             bg="brand.100"
-            fontSize="18px"
+            fontSize="13px"
             _hover={{ bg: "brand.50" }}
             overflow="hidden"  // Asegura que el contenido no se desborde del botón
             whiteSpace="normal"  // Permite que el texto ocupe más de una línea

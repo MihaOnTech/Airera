@@ -34,7 +34,11 @@ const Historial = () => {
 
           return (
             <Accordion key={sale.UUID} allowToggle>
-              <AccordionItem borderWidth={"2px"} borderColor={"black"} borderRadius={"5px"}  bg="brand.100">
+              <AccordionItem 
+                borderWidth={"2px"} 
+                borderColor={"black"} 
+                borderRadius={"5px"}  
+                bg={sale.status === "Pendiente" ? "brand.300" : "brand.50"}>
                 <AccordionButton>
                   <Box
                     flex="1"
@@ -58,14 +62,15 @@ const Historial = () => {
                           </Text>
                         )
                     )}
+                  {sale.status === "Pendiente" ? 
                   <Button
                     mt={4}
                     size="md"
-                    onClick={() => handleCompleteSale(sale.UUID)}
+                    onClick={() => handleCompleteSale(sale.id)}
                     bg={"brand.50"}
                   >
                     Cobrar
-                  </Button>
+                  </Button> : <></>}
                 </AccordionPanel>
               </AccordionItem>
             </Accordion>

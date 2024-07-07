@@ -83,7 +83,7 @@ const Ventas = () => {
       height="86vh"
       templateAreas={`"main nav"
                     "footer nav"`}
-      gridTemplateRows={"1fr 20vh"}
+      gridTemplateRows={"1fr 15vh"}
       gridTemplateColumns={"60vw 1fr"}
       gap="4"
       color="blackAlpha.700"

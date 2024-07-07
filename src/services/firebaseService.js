@@ -30,7 +30,11 @@ export const addSaleToFirestore = async (sale) => {
 export const completeSale = async (saleId) => {
     try {
         const saleUpdates = { status: "Pagado" };
-        const response = await axios.patch(`${BASE_URL}/updateSale?id=${saleId}`, saleUpdates);
+        const response = await axios.patch(`${BASE_URL}/updateSale?id=${saleId}`, saleUpdates, {
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
         return response.data; 
     } catch (error) {
         console.error('Error updating sale:', error);

@@ -25,7 +25,7 @@ const Categorias = ({ products, setSelectedCategory }) => {
             h="100%"
             bg="brand.100"
             _hover={{ bg: "brand.50" }}
-            fontSize="30px"
+            fontSize="20px"
             borderWidth={'2px'}
             borderColor={'black'}
             fontWeight={"normal"}
