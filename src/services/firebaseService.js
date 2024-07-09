@@ -75,3 +75,14 @@ export const getTopSellingProducts = async () => {
     }
 };
 
+// Función para obtener la caja del dia a través de la API
+export const getTodayCaja = async () => {
+    try {
+        const response = await axios.get(`${BASE_URL}/getCaja`);
+        return response.data;
+    } catch (error) {
+        console.error('Error getting caja', error);
+        throw error;
+    }
+};
+

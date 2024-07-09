@@ -2,7 +2,8 @@ import React, { createContext, useState, useEffect } from "react";
 import {
   getSalesFromFirestore,
   addSaleToFirestore,
-  completeSale
+  completeSale,
+  getTodayCaja
 } from "../services/firebaseService";
 import { v4 as uuidv4 } from "uuid";
 
@@ -10,6 +11,7 @@ export const SalesContext = createContext();
 
 export const SalesProvider = ({ children }) => {
   const [sales, setSales] = useState([]);
+  const [caja, setCaja] = useState({});
 
   useEffect(() => {
     const fetchSales = async () => {
@@ -18,6 +20,14 @@ export const SalesProvider = ({ children }) => {
       setSales([...salesData, ...localSales]);
     };
     fetchSales();
+  }, []);
+
+  useEffect(() => {
+    const fetchCaja = async () => {
+      const cajaData = await getTodayCaja();
+      setCaja(cajaData);
+    };
+    fetchCaja();
   }, []);
 
   useEffect(() => {
@@ -81,7 +91,7 @@ export const SalesProvider = ({ children }) => {
   };
 
   return (
-    <SalesContext.Provider value={{ sales, addSale, markAsCompleted }}>
+    <SalesContext.Provider value={{ sales, caja, addSale, markAsCompleted }}>
       {children}
     </SalesContext.Provider>
   );

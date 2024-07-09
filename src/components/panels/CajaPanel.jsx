@@ -3,17 +3,7 @@ import { Flex, Grid, GridItem, Button, Box, Text } from "@chakra-ui/react";
 import { SalesContext } from "../../contexts/SalesContext";
 
 const Caja = () => {
-  const { sales } = useContext(SalesContext);
-  const [selectedCategory, setSelectedCategory] = useState("Bebidas");
-
-  // Cálculo del total de ventas y beneficio
-  const totalSales = useMemo(() => {
-    if (!sales) return 0;
-    return sales.reduce((acc, sale) => acc + sale.importe, 0);
-  }, [sales]);
-
-  const cajaInicial = 200;
-  const beneficio = totalSales - cajaInicial;
+  const { caja } = useContext(SalesContext);
 
   return (
     <Grid
@@ -34,14 +24,32 @@ const Caja = () => {
       </GridItem>
       <GridItem area={"left"} bg={"brand.300"}>
         <Box overflowY="auto" p={4}>
-          {"VENTAS"}
+          <Text fontSize="2xl" fontWeight="bold">
+            VENTAS
+          </Text>
+          {console.log(caja)}
+          {caja &&
+          caja.items &&
+          Array.isArray(caja.items) &&
+          caja.items.length > 0 ? (
+            caja.items.map((item, index) => (
+              <Flex key={index} justifyContent="space-between" mt={2}>
+                <Text>{item.cantidad}{"   x   "}{item.nombre}</Text>
+              </Flex>
+            ))
+          ) : (
+            <Text>No items found</Text>
+          )}
           <Text mt={4} fontSize="xl" fontWeight="bold">
-            Total: {totalSales.toFixed(2)}€
+            Total: {caja.importe ? caja.importe.toFixed(2) : 0}€
           </Text>
         </Box>
       </GridItem>
       <GridItem area={"right"} bg={"blue"}>
-        STOCK
+        <Text fontSize="2xl" fontWeight="bold">
+          STOCK
+        </Text>
+        {/* Aquí podrías agregar el contenido relacionado con el stock */}
       </GridItem>
     </Grid>
   );
