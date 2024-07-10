@@ -10,6 +10,7 @@ import {
   AccordionIcon,
   Text,
   Button,
+  Spinner
 } from "@chakra-ui/react";
 import { SalesContext } from "../../contexts/SalesContext";
 import { completeSale } from "../../services/firebaseService";
@@ -17,11 +18,19 @@ import { completeSale } from "../../services/firebaseService";
 
 
 const Historial = () => {
-  const { sales, deleteSale } = useContext(SalesContext);
+  const { sales, deleteSale, loading, error } = useContext(SalesContext);
 
   const handleCompleteSale = (id) => {
     completeSale(id);
   };
+
+  if (loading) {
+    return <Spinner size="xl" />;
+  }
+
+  if (error) {
+    return <Text>Error loading data: {error.message}</Text>;
+  }
 
   return (
     <Box padding={4} height="86vh" overflow="auto">

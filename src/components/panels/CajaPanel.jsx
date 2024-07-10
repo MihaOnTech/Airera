@@ -1,9 +1,17 @@
-import React, { useState, useContext, useMemo } from "react";
-import { Flex, Grid, GridItem, Button, Box, Text } from "@chakra-ui/react";
+import React, { useContext } from "react";
+import { Flex, Grid, GridItem, Button, Box, Text, Spinner } from "@chakra-ui/react";
 import { SalesContext } from "../../contexts/SalesContext";
 
 const Caja = () => {
-  const { caja } = useContext(SalesContext);
+  const { caja, loading, error } = useContext(SalesContext);
+
+  if (loading) {
+    return <Spinner size="xl" />;
+  }
+
+  if (error) {
+    return <Text>Error loading data: {error.message}</Text>;
+  }
 
   return (
     <Grid
@@ -24,17 +32,13 @@ const Caja = () => {
       </GridItem>
       <GridItem area={"left"} bg={"brand.300"}>
         <Box overflowY="auto" p={4}>
-          <Text fontSize="2xl" fontWeight="bold">
-            VENTAS
-          </Text>
+          <Text fontSize="2xl" fontWeight="bold">VENTAS</Text>
           {console.log(caja)}
-          {caja &&
-          caja.items &&
-          Array.isArray(caja.items) &&
-          caja.items.length > 0 ? (
+          {caja && caja.items && Array.isArray(caja.items) && caja.items.length > 0 ? (
             caja.items.map((item, index) => (
               <Flex key={index} justifyContent="space-between" mt={2}>
-                <Text>{item.cantidad}{"   x   "}{item.nombre}</Text>
+                <Text>{item.nombre}</Text>
+                <Text>{item.cantidad}</Text>
               </Flex>
             ))
           ) : (
@@ -46,9 +50,7 @@ const Caja = () => {
         </Box>
       </GridItem>
       <GridItem area={"right"} bg={"blue"}>
-        <Text fontSize="2xl" fontWeight="bold">
-          STOCK
-        </Text>
+        <Text fontSize="2xl" fontWeight="bold">STOCK</Text>
         {/* Aquí podrías agregar el contenido relacionado con el stock */}
       </GridItem>
     </Grid>

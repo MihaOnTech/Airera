@@ -3,7 +3,7 @@ import {
   getSalesFromFirestore,
   addSaleToFirestore,
   completeSale,
-  getTodayCaja
+  getTodayCaja,
 } from "../services/firebaseService";
 import { v4 as uuidv4 } from "uuid";
 
@@ -12,20 +12,39 @@ export const SalesContext = createContext();
 export const SalesProvider = ({ children }) => {
   const [sales, setSales] = useState([]);
   const [caja, setCaja] = useState({});
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     const fetchSales = async () => {
-      const salesData = await getSalesFromFirestore();
-      const localSales = JSON.parse(localStorage.getItem("offlineSales")) || [];
-      setSales([...salesData, ...localSales]);
+      setLoading(true);
+      setError(null);
+      try {
+        const salesData = await getSalesFromFirestore();
+        const localSales =
+          JSON.parse(localStorage.getItem("offlineSales")) || [];
+        setSales([...salesData, ...localSales]);
+      } catch (error) {
+        setError(error);
+      } finally {
+        setLoading(false);
+      }
     };
     fetchSales();
   }, []);
 
   useEffect(() => {
     const fetchCaja = async () => {
-      const cajaData = await getTodayCaja();
-      setCaja(cajaData);
+      setLoading(true);
+      setError(null);
+      try {
+        const cajaData = await getTodayCaja();
+        setCaja(cajaData);
+      } catch (error) {
+        setError(error);
+      } finally {
+        setLoading(false);
+      }
     };
     fetchCaja();
   }, []);
@@ -67,6 +86,7 @@ export const SalesProvider = ({ children }) => {
         setSales((prevSales) => [...prevSales, saleFromServer]);
       } catch (error) {
         console.error("Error adding sale:", error);
+        setError(error);
       }
     } else {
       const offlineSales =
@@ -86,12 +106,15 @@ export const SalesProvider = ({ children }) => {
         prevSales.map((sale) => (sale.UUID === saleId ? updatedSale : sale))
       );
     } catch (error) {
-      console.error('Error marking sale as complete:', error);
+      console.error("Error marking sale as complete:", error);
+      setError(error);
     }
   };
 
   return (
-    <SalesContext.Provider value={{ sales, caja, addSale, markAsCompleted }}>
+    <SalesContext.Provider
+      value={{ sales, caja, addSale, markAsCompleted, loading, error }}
+    >
       {children}
     </SalesContext.Provider>
   );

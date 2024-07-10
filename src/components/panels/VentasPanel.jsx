@@ -1,5 +1,5 @@
 import React, { useState, useContext } from "react";
-import { Flex, Grid, GridItem, Select, Button, Input } from "@chakra-ui/react";
+import { Flex, Grid, GridItem, Spinner, Button, Input } from "@chakra-ui/react";
 import { ProductsContext } from "../../contexts/ProductsContext";
 import { SalesContext } from "../../contexts/SalesContext";
 import { ClientsContext } from "../../contexts/ClientsContext";
@@ -8,7 +8,7 @@ import ListaProductos from "../component/ListaProductos";
 import Categorias from "../component/Categorias";
 
 const Ventas = () => {
-  const products = useContext(ProductsContext);
+  const { products, loading, error} = useContext(ProductsContext);
   const { addSale } = useContext(SalesContext);
   const { clients, addClient } = useContext(ClientsContext);
 
@@ -77,6 +77,14 @@ const Ventas = () => {
   const filteredProducts = products.filter(
     (product) => product.Categoria === selectedCategory
   );
+
+  if (loading) {
+    return <Spinner size="xl" />;
+  }
+
+  if (error) {
+    return <Text>Error loading data: {error.message}</Text>;
+  }
 
   return (
     <Grid
