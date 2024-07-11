@@ -101,12 +101,18 @@ export const SalesProvider = ({ children }) => {
 
   const markAsCompleted = async (saleId) => {
     try {
-      const updatedSale = await completeSale(saleId);
+      // Update state optimistically
       setSales((prevSales) =>
-        prevSales.map((sale) => (sale.UUID === saleId ? updatedSale : sale))
+        prevSales.map((sale) => (sale.id === saleId ? { ...sale, status: "Pagado" } : sale))
+      );
+      // Make the server request
+      const updatedSale = await completeSale(saleId);
+      // Update the sale with the actual server response
+      setSales((prevSales) =>
+        prevSales.map((sale) => (sale.id === saleId ? updatedSale : sale))
       );
     } catch (error) {
-      console.error("Error marking sale as complete:", error);
+      console.error('Error marking sale as complete:', error);
       setError(error);
     }
   };

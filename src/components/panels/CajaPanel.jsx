@@ -37,8 +37,7 @@ const Caja = () => {
           {caja && caja.items && Array.isArray(caja.items) && caja.items.length > 0 ? (
             caja.items.map((item, index) => (
               <Flex key={index} justifyContent="space-between" mt={2}>
-                <Text>{item.nombre}</Text>
-                <Text>{item.cantidad}</Text>
+                <Text>{item.cantidad + "  x  " + item.nombre}</Text>
               </Flex>
             ))
           ) : (

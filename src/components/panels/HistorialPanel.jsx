@@ -13,15 +13,13 @@ import {
   Spinner
 } from "@chakra-ui/react";
 import { SalesContext } from "../../contexts/SalesContext";
-import { completeSale } from "../../services/firebaseService";
-
 
 
 const Historial = () => {
-  const { sales, deleteSale, loading, error } = useContext(SalesContext);
+  const { sales, markAsCompleted, loading, error } = useContext(SalesContext);
 
   const handleCompleteSale = (id) => {
-    completeSale(id);
+    markAsCompleted(id);
   };
 
   if (loading) {
@@ -56,7 +54,7 @@ const Historial = () => {
                     fontWeight={"normal"}
                   >
                     <Text>
-                     {sale.cliente} - Importe: {sale.importe}€ - {sale.status}
+                     {sale.cliente} - Importe: {sale.importe.toFixed(2)}€ - {sale.status}
                     </Text>
                   </Box>
                   <AccordionIcon />
