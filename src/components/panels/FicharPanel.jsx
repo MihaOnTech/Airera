@@ -9,12 +9,13 @@ import {
 } from "@chakra-ui/react";
 import { ArrowBackIcon } from "@chakra-ui/icons";
 import { auth } from "../../firebaseConfig";
-import QRGenerator from "../component/QRGenerator";
+import AddProductForm from "../forms/AddProductForm";
+import AddClientForm from "../forms/AddClientForm";
 
 const Fichar = () => {
-  const [selectedUser, setSelectedUser] = useState("");
-  const [action, setAction] = useState("");
-  const [showQR, setShowQR] = useState(false);
+  const menus = ["Añadir Producto", "Añadir Cliente", "Modificar Venta", "Añadir Gasto"];
+
+  const [selectedMenu, setSelectedMenu] = useState(menus[0]);
   const [datetime, setDatetime] = useState("");
 
   const handleLogout = async () => {
@@ -26,28 +27,24 @@ const Fichar = () => {
     }
   };
 
-  const handleSelectUser = (user) => {
-    setSelectedUser(user);
-    setAction("");
-    setShowQR(false);
+  const handleMenu = (menu) => {
+    setSelectedMenu(menu);
   };
 
-  const handleAction = (type) => {
-    if (!selectedUser) {
-      alert("Please select a user first.");
-      return;
+  const renderSelectedMenu = () => {
+    switch (selectedMenu) {
+      case "Añadir Producto":
+        return <AddProductForm />;
+      case "Añadir Cliente":
+        return <AddClientForm />;
+      case "Borrar Venta":
+        return <div>Borrar Venta</div>;
+      case "Añadir Gasto":
+        return <div>Añadir Gasto</div>;
+      default:
+        return null;
     }
-    setAction(type);
-    setDatetime(new Date().toISOString());
-    setShowQR(true);
   };
-
-  const handleBackClick = () => {
-    setAction("");
-    setShowQR(false);
-  };
-
-  const users = ["Andrea", "Ángela", "Hans", "Miguel"];
 
   return (
     <Grid
@@ -65,40 +62,44 @@ const Fichar = () => {
       fontWeight="bold"
     >
       <GridItem area={"top"} bg="blue.200">
-        <Button onClick={handleLogout} height="100%" width="10vh" fontSize="25px">
+        <Button
+          onClick={handleLogout}
+          height="100%"
+          width="10vh"
+          fontSize="25px"
+        >
           Salir
         </Button>
       </GridItem>
-      <GridItem area={"left"} bg="green.200" display="flex" flexDirection="column">
-        {users.map((user) => (
-          <Button key={user} onClick={() => handleSelectUser(user)} width="100%" height="25%">
-            {user}
+      <GridItem area={"left"} display="flex" flexDirection="column">
+        {menus.map((menu) => (
+          <Button
+            key={menu}
+            m={"5px"}
+            onClick={() => handleMenu(menu)}
+            width="100%"
+            height="25%"
+            borderColor={"black"}
+            borderWidth={"2px"}
+            bg={"brand.100"}
+          >
+            {menu}
           </Button>
         ))}
       </GridItem>
-      <GridItem area={"main"} bg="red.200" display="flex" alignItems="center" justifyContent="center">
-        {showQR ? (
-          <QRGenerator action={action} datetime={datetime} user={selectedUser} />
-        ) : (
-          <Flex direction="column" width="100%" height="100%">
-            <Button onClick={() => handleAction("Entrada")} width="100%" height="50%" bg="green.200" fontSize={"30px"}>
-              Entrada
-            </Button>
-            <Button onClick={() => handleAction("Salida")} width="100%" height="50%" bg="red.200" fontSize={"30px"}>
-              Salida
-            </Button>
-          </Flex>
-        )}
+      <GridItem
+        area={"main"}
+        display="flex"
+        alignItems="center"
+        justifyContent="center"
+      >
+        {renderSelectedMenu()}
       </GridItem>
       <GridItem pl="2" area={"right"} bg="purple.200">
         {/* Placeholder or additional content */}
       </GridItem>
       <GridItem pl="2" area={"footer"} bg="gray.400">
-        {showQR && (
-          <Flex justify="center" align="center" position="relative">
-            <Text fontSize={"30px"}>Scanea el QR para registrar tu {action}</Text>
-          </Flex>
-        )}
+        FOOTER
       </GridItem>
     </Grid>
   );
