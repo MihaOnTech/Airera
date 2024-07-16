@@ -23,7 +23,7 @@ const OfficePage = () => {
 
   return (
     <Flex direction="column" height="100vh">
-      <Box as="header" bg="teal.500" color="white" padding="4" textAlign="center">
+      <Box as="header" bg="black" color="white" padding="4" textAlign="center">
         <Text fontSize="lg" fontWeight="bold">Office Page</Text>
       </Box>
 
