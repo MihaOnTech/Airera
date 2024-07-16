@@ -4,7 +4,7 @@ import { Box, SimpleGrid, Button } from "@chakra-ui/react";
 const ListaProductos = ({ products, handleAddToCart }) => {
   return (
     <Box w="100%" h="100%" overflow="auto" mt={"15px"}>
-      <SimpleGrid columns={{ base: 2, md: 4, lg: 8 }} spacing={3}>
+      <SimpleGrid columns={{ base: 2, md: 4, lg: 7 }} spacing={3}>
         {products.map((product) => (
           <Button
             key={product.id}

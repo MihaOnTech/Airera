@@ -1,9 +1,32 @@
-import React from "react";
-import { Box, Button, Text, Flex, IconButton, Select, Input } from "@chakra-ui/react";
+import React, { useState } from "react";
+import {
+  Box,
+  Button,
+  Text,
+  Flex,
+  IconButton,
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalCloseButton,
+  ModalBody,
+  ModalFooter,
+} from "@chakra-ui/react";
 import { CloseIcon } from "@chakra-ui/icons";
+import ConfirmSaleForm from "../forms/ConfirmSaleForm";
 
 const Carrito = ({ cart, handleAddSale, removeItemFromCart, clients, selectedClient, setSelectedClient, newClientName, setNewClientName }) => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const total = cart.reduce((sum, [nombre, precio, cantidad]) => sum + (precio * cantidad), 0).toFixed(2);
+
+  const handleConfirmClick = () => {
+    setIsModalOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+  };
 
   return (
     <Box
@@ -48,34 +71,13 @@ const Carrito = ({ cart, handleAddSale, removeItemFromCart, clients, selectedCli
       </Box>
 
       <Box p={4} bg="brand.100" borderTopWidth="1px" borderColor="black" color={"black"}>
-        <Flex direction="column" width="100%" mb={4}>
-          <Select
-            placeholder="Nuevo Cliente"
-            onChange={(e) => setSelectedClient(e.target.value)}
-            value={selectedClient}
-            mb="2"
-          >
-            {clients.map((client, index) => (
-              <option key={index} value={client.nombre}>
-                {client.nombre}
-              </option>
-            ))}
-          </Select>
-          <Input
-            placeholder="Nuevo Cliente"
-            value={newClientName}
-            onChange={(e) => setNewClientName(e.target.value)}
-            mb="2"
-          />
-        </Flex>
-
         <Flex justifyContent="space-between" alignItems="center" mb={4}>
           <Text fontSize="20px" fontWeight="bold">TOTAL:</Text>
           <Text fontSize="20px" fontWeight="bold">{total} €</Text>
         </Flex>
 
         <Button
-          onClick={handleAddSale}
+          onClick={handleConfirmClick}
           fontSize="20px"
           borderRadius="md"
           height="40px"
@@ -87,6 +89,22 @@ const Carrito = ({ cart, handleAddSale, removeItemFromCart, clients, selectedCli
         >
           Confirmar
         </Button>
+
+        <Modal isOpen={isModalOpen} onClose={handleCloseModal}>
+          <ModalOverlay />
+          <ModalContent>
+            <ModalHeader>Confirmar Venta</ModalHeader>
+            <ModalCloseButton />
+            <ModalBody>
+              <ConfirmSaleForm 
+                cart={cart} 
+                clients={clients} 
+                handleAddSale={handleAddSale} 
+                onClose={handleCloseModal} 
+              />
+            </ModalBody>
+          </ModalContent>
+        </Modal>
       </Box>
     </Box>
   );

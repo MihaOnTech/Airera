@@ -46,7 +46,10 @@ export const completeSale = async (saleId) => {
 export const getAllClients = async () => {
     try {
         const response = await axios.get(`${BASE_URL}/getAllClients`);
-        return response.data;
+        const clients = response.data;
+        // Ordenar los clientes por el campo 'nombre'
+        clients.sort((a, b) => a.nombre.localeCompare(b.nombre));
+        return clients;
     } catch (error) {
         console.error('Error getting products', error);
         throw error;
@@ -57,9 +60,34 @@ export const getAllClients = async () => {
 export const getAllProducts = async () => {
     try {
         const response = await axios.get(`${BASE_URL}/getAllProducts`);
-        return response.data;
+        const products = response.data;
+        // Ordenar los productos por el campo 'Nombre'
+        products.sort((a, b) => a.Nombre.localeCompare(b.Nombre));
+        return products;
     } catch (error) {
         console.error('Error getting products', error);
+        throw error;
+    }
+};
+
+// Función para añadir un nuevo producto a través de la API
+export const addProduct = async (product) => {
+    try {
+        const response = await axios.post(`${BASE_URL}/addProduct`, product);
+        return response.data;
+    } catch (error) {
+        console.error('Error adding product', error);
+        throw error;
+    }
+};
+
+// Función para añadir un nuevo cliente a través de la API
+export const addClient = async (client) => {
+    try {
+        const response = await axios.post(`${BASE_URL}/addClient`, client);
+        return response.data;
+    } catch (error) {
+        console.error('Error adding client', error);
         throw error;
     }
 };

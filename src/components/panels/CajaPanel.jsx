@@ -33,7 +33,6 @@ const Caja = () => {
       <GridItem area={"left"} bg={"brand.300"}>
         <Box overflowY="auto" p={4}>
           <Text fontSize="2xl" fontWeight="bold">VENTAS</Text>
-          {console.log(caja)}
           {caja && caja.items && Array.isArray(caja.items) && caja.items.length > 0 ? (
             caja.items.map((item, index) => (
               <Flex key={index} justifyContent="space-between" mt={2}>

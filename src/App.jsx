@@ -4,7 +4,9 @@ import { useAuthState } from 'react-firebase-hooks/auth';
 import { auth } from './firebaseConfig';
 import AuthPage from './components/pages/AuthPage';
 import BarPage from './components/pages/BarPage';
+import OfficePage from './components/pages/OfficePage';
 import PrivateRoute from './components/component/PrivateRoute';
+import SelectionPage from './components/pages/SelectionPage';
 import { Flex, Box } from '@chakra-ui/react';
 
 function App() {
@@ -14,19 +16,11 @@ function App() {
 
   return (
     <Routes>
-      <Route
-        path="/"
-        element={!user ? <AuthPage /> : <Navigate to="/bar" />}
-      />
-      <Route
-        path="/bar/*"
-        element={
-          <PrivateRoute>
-            <BarPage />
-          </PrivateRoute>
-        }
-      />
-   </Routes>
+      <Route path="/" element={!user ? <AuthPage /> : <Navigate to="/selection" />} />
+      <Route path="/selection" element={<PrivateRoute><SelectionPage /></PrivateRoute>} />
+      <Route path="/bar/*" element={<PrivateRoute><BarPage /></PrivateRoute>} />
+      <Route path="/office/*" element={<PrivateRoute><OfficePage /></PrivateRoute>} />
+    </Routes>
 
   );
 }

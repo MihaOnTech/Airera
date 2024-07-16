@@ -1,11 +1,10 @@
 import React, { createContext, useState, useEffect } from "react";
-import { getAllProducts } from "../services/firebaseService";
+import { getAllProducts, addProduct } from "../services/firebaseService";
 
 export const ProductsContext = createContext();
 
 export const ProductsProvider = ({ children }) => {
   const [products, setProducts] = useState([]);
-  const [favProducts, setFavProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
@@ -15,7 +14,7 @@ export const ProductsProvider = ({ children }) => {
       setError(null);
       try {
         const productsData = await getAllProducts();
-        setProducts(productsData)
+        setProducts(productsData);
       } catch (error) {
         setError(error);
       } finally {
@@ -25,8 +24,18 @@ export const ProductsProvider = ({ children }) => {
     fetchProducts();
   }, []);
 
+  const addNewProduct = async (product) => {
+    try {
+      const newProduct = await addProduct(product);
+      setProducts((prevProducts) => [...prevProducts, newProduct]);
+      console.log(newProduct);
+    } catch (error) {
+      setError(error);
+    }
+  };
+
   return (
-    <ProductsContext.Provider value={{ products, loading, error }}>
+    <ProductsContext.Provider value={{ products, loading, error, addNewProduct }}>
       {children}
     </ProductsContext.Provider>
   );

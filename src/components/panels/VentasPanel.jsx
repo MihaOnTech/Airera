@@ -1,5 +1,5 @@
 import React, { useState, useContext } from "react";
-import { Flex, Grid, GridItem, Spinner, Button, Input } from "@chakra-ui/react";
+import { Flex, Grid, GridItem, Spinner, Button, Input, Text } from "@chakra-ui/react";
 import { ProductsContext } from "../../contexts/ProductsContext";
 import { SalesContext } from "../../contexts/SalesContext";
 import { ClientsContext } from "../../contexts/ClientsContext";
@@ -48,7 +48,7 @@ const Ventas = () => {
     });
   };
 
-  const handleAddSale = () => {
+  const handleAddSale = (clientId, saleStatus) => {
     const items = cart.map(([nombre, _, cantidad]) => ({
       nombre: nombre,
       cantidad: cantidad,
@@ -60,8 +60,8 @@ const Ventas = () => {
     const newSale = {
       items,
       importe,
-      cliente: selectedClient || newClientName,
-      status: "Pendiente",
+      cliente: clientId,
+      status: saleStatus,
       fecha: new Date().toISOString(),
     };
 

@@ -69,6 +69,7 @@ const Historial = () => {
                           </Text>
                         )
                     )}
+                  
                   {sale.status === "Pendiente" ? 
                   <Button
                     mt={4}
