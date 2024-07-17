@@ -2,6 +2,7 @@ import React, { createContext, useState, useEffect } from "react";
 import {
   getSalesFromFirestore,
   addSaleToFirestore,
+  deleteSaleFromFirestore,
   completeSale,
   getTodayCaja,
 } from "../services/firebaseService";
@@ -82,8 +83,12 @@ export const SalesProvider = ({ children }) => {
 
     if (navigator.onLine) {
       try {
+        setSales((prevSales) => {
+          const updatedSales = [...prevSales, saleWithId];
+          console.log("Updated Sales:", updatedSales); // Debug line
+          return updatedSales;
+        });
         const saleFromServer = await addSaleToFirestore(saleWithId);
-        setSales((prevSales) => [...prevSales, saleFromServer]);
       } catch (error) {
         console.error("Error adding sale:", error);
         setError(error);
@@ -98,12 +103,22 @@ export const SalesProvider = ({ children }) => {
       setSales((prevSales) => [...prevSales, saleWithId]);
     }
   };
-
+  const deleteSale = async (saleId) => {
+    try {
+      setSales((prevSales) => prevSales.filter((sale) => sale.id !== saleId));
+      await deleteSaleFromFirestore(saleId);
+    } catch (error) {
+      console.error("Error deleting sale:", error);
+      setError(error);
+    }
+  };
   const markAsCompleted = async (saleId) => {
     try {
       // Update state optimistically
       setSales((prevSales) =>
-        prevSales.map((sale) => (sale.id === saleId ? { ...sale, status: "Pagado" } : sale))
+        prevSales.map((sale) =>
+          sale.id === saleId ? { ...sale, status: "Pagado" } : sale
+        )
       );
       // Make the server request
       const updatedSale = await completeSale(saleId);
@@ -112,14 +127,22 @@ export const SalesProvider = ({ children }) => {
         prevSales.map((sale) => (sale.id === saleId ? updatedSale : sale))
       );
     } catch (error) {
-      console.error('Error marking sale as complete:', error);
+      console.error("Error marking sale as complete:", error);
       setError(error);
     }
   };
 
   return (
     <SalesContext.Provider
-      value={{ sales, caja, addSale, markAsCompleted, loading, error }}
+      value={{
+        sales,
+        caja,
+        addSale,
+        deleteSale,
+        markAsCompleted,
+        loading,
+        error,
+      }}
     >
       {children}
     </SalesContext.Provider>

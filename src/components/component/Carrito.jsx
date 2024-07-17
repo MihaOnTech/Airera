@@ -16,7 +16,7 @@ import {
 import { CloseIcon } from "@chakra-ui/icons";
 import ConfirmSaleForm from "../forms/ConfirmSaleForm";
 
-const Carrito = ({ cart, handleAddSale, removeItemFromCart, clients, selectedClient, setSelectedClient, newClientName, setNewClientName }) => {
+const Carrito = ({ cart, handleAddSale, removeItemFromCart, clients, sales, selectedClient, setSelectedClient, newClientName, setNewClientName }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const total = cart.reduce((sum, [nombre, precio, cantidad]) => sum + (precio * cantidad), 0).toFixed(2);
 
@@ -99,7 +99,8 @@ const Carrito = ({ cart, handleAddSale, removeItemFromCart, clients, selectedCli
               <ConfirmSaleForm 
                 cart={cart} 
                 clients={clients} 
-                handleAddSale={handleAddSale} 
+                handleAddSale={handleAddSale}
+                sales={sales} 
                 onClose={handleCloseModal} 
               />
             </ModalBody>

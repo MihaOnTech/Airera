@@ -26,6 +26,16 @@ export const addSaleToFirestore = async (sale) => {
         throw error;
     }
 };
+// Función para eliminar una venta
+export const deleteSaleFromFirestore = async (saleId) => {
+    try {
+        const response = await axios.delete(`${BASE_URL}/deleteSale`, { params: { id: saleId } });
+        return response.data; 
+    } catch (error) {
+        console.error('Error deleting sale:', error);
+        throw error;
+    }
+};
 // Función para añadir una nueva venta a través de la API
 export const completeSale = async (saleId) => {
     try {

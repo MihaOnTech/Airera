@@ -9,7 +9,7 @@ import Categorias from "../component/Categorias";
 
 const Ventas = () => {
   const { products, loading, error} = useContext(ProductsContext);
-  const { addSale } = useContext(SalesContext);
+  const { sales, addSale } = useContext(SalesContext);
   const { clients, addClient } = useContext(ClientsContext);
 
   const [selectedCategory, setSelectedCategory] = useState("Bebidas");
@@ -103,6 +103,7 @@ const Ventas = () => {
           handleAddSale={handleAddSale}
           removeItemFromCart={removeItemFromCart}
           clients={clients}
+          sales={sales}
           selectedClient={selectedClient}
           setSelectedClient={setSelectedClient}
           newClientName={newClientName}

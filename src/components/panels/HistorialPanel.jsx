@@ -10,16 +10,20 @@ import {
   AccordionIcon,
   Text,
   Button,
-  Spinner
+  Spinner,
 } from "@chakra-ui/react";
 import { SalesContext } from "../../contexts/SalesContext";
 
-
 const Historial = () => {
-  const { sales, markAsCompleted, loading, error } = useContext(SalesContext);
+  const { sales, deleteSale, markAsCompleted, loading, error } =
+    useContext(SalesContext);
 
   const handleCompleteSale = (id) => {
     markAsCompleted(id);
+  };
+
+  const handleDeleteSale = (id) => {
+    deleteSale(id);
   };
 
   if (loading) {
@@ -41,11 +45,12 @@ const Historial = () => {
 
           return (
             <Accordion key={sale.UUID} allowToggle>
-              <AccordionItem 
-                borderWidth={"2px"} 
-                borderColor={"black"} 
-                borderRadius={"5px"}  
-                bg={sale.status === "Pendiente" ? "brand.300" : "brand.50"}>
+              <AccordionItem
+                borderWidth={"2px"}
+                borderColor={"black"}
+                borderRadius={"5px"}
+                bg={sale.status === "Pendiente" ? "brand.300" : "brand.50"}
+              >
                 <AccordionButton>
                   <Box
                     flex="1"
@@ -54,7 +59,8 @@ const Historial = () => {
                     fontWeight={"normal"}
                   >
                     <Text>
-                     {sale.cliente} - Importe: {sale.importe.toFixed(2)}€ - {sale.status}
+                      {sale.cliente} - Importe: {sale.importe.toFixed(2)}€ -{" "}
+                      {sale.status}
                     </Text>
                   </Box>
                   <AccordionIcon />
@@ -69,16 +75,27 @@ const Historial = () => {
                           </Text>
                         )
                     )}
-                  
-                  {sale.status === "Pendiente" ? 
                   <Button
                     mt={4}
                     size="md"
-                    onClick={() => handleCompleteSale(sale.id)}
-                    bg={"brand.50"}
+                    onClick={() => handleDeleteSale(sale.id)}
+                    bg={"red.500"}
+                    ml={2}
                   >
-                    Cobrar
-                  </Button> : <></>}
+                    Eliminar
+                  </Button>
+                  {sale.status === "Pendiente" ? (
+                    <Button
+                      mt={4}
+                      size="md"
+                      onClick={() => handleCompleteSale(sale.id)}
+                      bg={"brand.50"}
+                    >
+                      Cobrar
+                    </Button>
+                  ) : (
+                    <></>
+                  )}
                 </AccordionPanel>
               </AccordionItem>
             </Accordion>

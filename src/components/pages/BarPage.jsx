@@ -52,7 +52,7 @@ const BarPage = () => {
                 <CustomTab>Historial</CustomTab>
                 <CustomTab>Tareas</CustomTab>
                 <CustomTab>Caja</CustomTab>
-                <CustomTab>Fichar</CustomTab>
+                <CustomTab>Office</CustomTab>
               </TabList>
               <TabPanels
                 borderColor="black"
